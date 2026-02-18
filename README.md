@@ -1,37 +1,26 @@
-# 🎨 Divina Artesanía - Gestión de Inventario Full-Stack
+# 🎨 Divina Artesanía - Ecosistema Digital Full-Stack
 
 ### 📋 Descripción del Proyecto
-Este ecosistema digital fue diseñado para automatizar y profesionalizar la gestión de productos de un emprendimiento artesanal en **Maipú, Chile**. El sistema permite a la artesana administrar su catálogo en tiempo real, controlando stock, precios e imágenes directamente desde su dispositivo móvil.
+Este ecosistema integra una solución móvil y web para la digitalización total de un emprendimiento artesanal. El sistema permite la gestión administrativa bidireccional y ofrece una experiencia de compra fluida para los usuarios finales.
 
-### 🛠️ Arquitectura y Tecnologías
-El proyecto se divide en dos grandes módulos comunicados mediante una API REST:
+### 🛠️ Arquitectura de Roles y Plataformas
+El proyecto destaca por su capacidad de sincronización entre múltiples interfaces:
 
-* **Frontend (App Móvil)**: Desarrollado con **Ionic Framework** y **Angular**. Utiliza servicios inyectables para la comunicación HTTP y manejo de estados.
-* **Backend (API)**: Construido con **Django REST Framework (DRF)**. Gestiona la lógica de negocio, la base de datos y el almacenamiento de archivos multimedia.
-* **Lenguajes**: TypeScript (Frontend) y Python (Backend).
+* **Gestión Administrativa (Django Web & Ionic App)**: 
+    * La artesana puede gestionar el catálogo (CRUD completo) indistintamente desde la **web de Django** o desde la **app móvil de Ionic**.
+    * Permite la actualización de stock, precios y fotografías en tiempo real para ambos canales.
+* **Experiencia del Cliente (Ionic App)**:
+    * Cualquier usuario puede navegar por el catálogo actualizado.
+    * Implementación de **Carrito de Compras** funcional para que los clientes realicen pedidos directamente desde la aplicación.
 
-### 🚀 Funcionalidades Clave
-* **Ciclo CRUD Completo**: Creación, visualización, edición y eliminación de productos con validaciones de servidor.
-* **Gestión Multimedia**: Implementación de carga de imágenes reales mediante el protocolo `FormData`.
-* **Sincronización en Red Local**: Configurado para operar entre un PC servidor y dispositivos móviles conectados a la misma red.
-* **Interfaz de Administración**: Panel intuitivo con confirmaciones de seguridad (`AlertController`) para evitar errores en el inventario.
+### 🚀 Especificaciones Técnicas
+* **Core (Django)**: Actúa como servidor central, API REST y portal web administrativo.
+* **Cliente (Ionic/Angular)**: Aplicación híbrida con lógica diferenciada para administración y ventas.
+* **Sincronización**: Uso de `FormData` para asegurar que las modificaciones de productos (incluyendo imágenes) se reflejen instantáneamente en todas las plataformas.
 
 ### 📂 Estructura del Repositorio
-* `/frontend-ionic`: Código fuente de la aplicación móvil.
-* `/backend-django`: Lógica de servidor y API.
-
-### 🛠️ Instalación y Configuración
-
-#### Backend:
-1. Navegar a `/backend-django`.
-2. Crear entorno virtual: `python -m venv venv`.
-3. Instalar dependencias: `pip install django djangorestframework django-cors-headers`.
-4. Ejecutar servidor: `python manage.py runserver 0.0.0.0:8000`.
-
-#### Frontend:
-1. Navegar a `/frontend-ionic`.
-2. Instalar dependencias: `npm install`.
-3. Ejecutar app: `ionic serve`.
+* `/frontend-ionic`: Aplicación móvil (Compra para clientes + Gestión para artesana).
+* `/backend-django`: Servidor central y Portal Web Administrativo.
 
 ---
-*Proyecto desarrollado por Benjamín - Estudiante de 3er año de Ingeniería en Informática*.
+*Proyecto desarrollado por Benjamín - 3er año de Ingeniería en Informática*.
