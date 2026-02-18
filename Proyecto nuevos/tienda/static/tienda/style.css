@@ -1,0 +1,392 @@
+/* --- CONFIGURACIÓN BASE --- */
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth;
+}
+
+body { background-color: #f9f4f0; color: #333; line-height: 1.6; }
+
+/* --- NAVEGACIÓN Y LOGO --- */
+nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 50px; background: #fff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: sticky; top: 0; z-index: 1000;
+}
+
+.logo { display: flex; align-items: center; gap: 10px; font-weight: bold; color: #d4a373; }
+#logo-img { height: 50px; width: auto; display: block; transition: 0.3s; }
+#logo-img:hover { transform: scale(1.05); }
+
+nav ul { display: flex; list-style: none; align-items: center; }
+nav ul li { margin-left: 25px; }
+nav ul li a { text-decoration: none; color: #555; transition: 0.3s; }
+nav ul li a:hover { color: #d4a373; }
+
+.carrito-link {
+    background: #d4a373; color: white; padding: 8px 15px;
+    border-radius: 25px; font-weight: bold; cursor: pointer;
+}
+
+/* --- HERO --- */
+.hero {
+    height: 60vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1200&q=80');
+    background-size: cover; background-position: center; color: white;
+}
+
+/* --- GALERÍA --- */
+.galeria {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px; padding: 60px 50px; max-width: 1200px; margin: 0 auto;
+}
+
+.card {
+    background: white; border-radius: 12px; overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: relative;
+    transition: 0.3s; animation: fadeInUp 0.6s ease forwards;
+}
+
+.card:hover { transform: translateY(-10px); }
+.card img { width: 100%; height: 250px; object-fit: cover; }
+
+/* --- ETIQUETAS (BADGES) --- */
+.badge {
+    position: absolute; top: 15px; left: 15px;
+    background: rgba(91, 74, 58, 0.85); color: white;
+    padding: 4px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: bold;
+}
+
+.badge-warning {
+    position: absolute; top: 45px; left: 15px;
+    background: #e63946; color: white;
+    padding: 4px 12px; border-radius: 15px; font-size: 0.75rem; font-weight: bold;
+    animation: pulse 2s infinite; /* Efecto visual de atención */
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* --- MENSAJE TIENDA VACÍA --- */
+.mensaje-vacio {
+    grid-column: 1 / -1; text-align: center; padding: 80px 20px;
+    background: white; border-radius: 15px; border: 2px dashed #d4a373;
+}
+
+.btn-whatsapp-vacio {
+    display: inline-block; margin-top: 20px; padding: 12px 25px;
+    background: #25d366; color: white; text-decoration: none;
+    border-radius: 5px; font-weight: bold; transition: 0.3s;
+}
+
+.btn-whatsapp-vacio:hover { background: #1eb954; transform: scale(1.05); }
+
+/* --- INFORMACIÓN DE TARJETA --- */
+.card-info { padding: 25px; text-align: center; }
+.precio { display: block; font-size: 1.3rem; font-weight: bold; color: #d4a373; margin: 10px 0 20px; }
+
+/* --- BOTONES --- */
+button { padding: 12px 28px; background: #d4a373; border: none; color: white; cursor: pointer; border-radius: 5px; font-weight: 600; transition: 0.3s; }
+button:hover { background: #bc8a5f; }
+.btn-comprar { width: 100%; background: #333; }
+.btn-comprar:hover { background: #000; }
+#btn-finalizar { width: 100%; margin-top: 20px; background: #25d366; }
+
+/* --- MODAL Y TOASTS --- */
+.modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
+.modal-content { background: white; margin: 5% auto; padding: 30px; width: 90%; max-width: 450px; border-radius: 15px; position: relative; }
+.close-btn { position: absolute; right: 20px; top: 15px; font-size: 24px; cursor: pointer; }
+
+.item-carrito { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+.btn-eliminar { background: #ffefef; color: #e63946; padding: 5px 10px; font-size: 0.8rem; border: none; cursor: pointer; border-radius: 3px; }
+
+#toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 3000; }
+.toast { background: #333; color: white; padding: 15px 25px; border-radius: 8px; margin-top: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); animation: slideIn 0.3s ease-out; }
+
+/* --- ANIMACIONES --- */
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+/* --- FOOTER --- */
+footer {
+    background-color: #333; color: white;
+    padding: 60px 50px 30px; margin-top: 50px; width: 100%;
+}
+
+.footer-content {
+    display: flex; justify-content: space-between;
+    max-width: 1200px; margin: 0 auto; flex-wrap: wrap; gap: 30px;
+}
+
+.footer-section h3 { margin-bottom: 15px; color: #d4a373; }
+.footer-bottom {
+    text-align: center; margin-top: 40px; padding-top: 20px;
+    border-top: 1px solid #555; font-size: 0.8rem; color: #bbb;
+}
+
+
+/* --- ESTILOS EXCLUSIVOS PARA EL DASHBOARD --- */
+
+.body-dashboard {
+    background-color: #f4f1ee; /* Un tono crema suave */
+    padding: 20px;
+}
+
+.gestion-container {
+    max-width: 1000px;
+    margin: 20px auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+/* Cabecera */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #f9f4f0;
+    padding-bottom: 20px;
+}
+
+/* Formulario de Creación */
+.form-nuevo {
+    background: #fafaf9;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #e9e4e0;
+}
+
+.grid-crear {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas */
+    gap: 20px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.campo input, .campo select, .campo textarea {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.campo input:focus, .campo textarea:focus {
+    border-color: #d4a373;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(212, 163, 115, 0.1);
+}
+
+.full-width { grid-column: 1 / -1; } /* Ocupa todo el ancho */
+
+.file-box {
+    background: #fff;
+    padding: 15px;
+    border: 2px dashed #d4a373;
+    text-align: center;
+}
+
+.btn-publicar {
+    background: #d4a373;
+    color: white;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-publicar:hover {
+    background: #bc8a5f;
+    transform: translateY(-2px);
+}
+
+/* Tabla de Inventario */
+.seccion-tabla { margin-top: 50px; }
+
+.titulo-seccion {
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead { background: #f8f5f2; }
+
+th {
+    padding: 15px;
+    text-align: left;
+    color: #888;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+td {
+    padding: 20px 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.mini-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.mini-info img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.input-edit {
+    width: 90px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.btn-actualizar {
+    background: #333;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-actualizar:hover { background: #000; }
+
+/* Badges de Estado */
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+.ok { background: #e2f9e1; color: #1e7e34; }
+.agotado { background: #ffe3e3; color: #d00000; }
+
+
+/* --- Estilos Del Login --- */
+.body-login {
+    background: linear-gradient(rgba(212, 163, 115, 0.1), rgba(212, 163, 115, 0.1)), url('https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?q=80&w=1200');
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-logo { width: 80px; margin-bottom: 20px; }
+
+.campo-login { text-align: left; margin-bottom: 20px; }
+.campo-login label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
+.campo-login input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.btn-login {
+    width: 100%;
+    background: #d4a373;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-login:hover { background: #bc8a5f; }
+.error-msg { color: #e63946; font-size: 0.9rem; margin-top: 10px; }
+.link-volver { display: block; margin-top: 20px; color: #888; text-decoration: none; font-size: 0.9rem; }
+
+.link-admin {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.link-admin:hover {
+    color: #d4a373;
+    text-decoration: underline;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}   
+
+/* Contenedor de mensajes */
+.messages {
+    margin-bottom: 20px;
+}
+
+/* Estilo base de la alerta */
+.alert {
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    font-weight: 500;
+}
+
+/* Color si es ERROR (Validación de imagen fallida) */
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+}
+
+/* Color si es ÉXITO (Producto creado o actualizado) */
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}

@@ -1,0 +1,47 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mi Carrito</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+  <ion-list *ngIf="items.length > 0" class="ion-padding">
+    <ion-item-sliding *ngFor="let item of items">
+      <ion-item lines="full">
+        <ion-thumbnail slot="start">
+          <img [src]="item.imagen" />
+        </ion-thumbnail>
+        <ion-label>
+          <h2>{{ item.nombre }}</h2>
+          <p>{{ item.cantidad }} unidad(es) x ${{ item.precio }}</p>
+          <h3 color="primary">Subtotal: ${{ item.precio * item.cantidad }}</h3>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="eliminarProducto(item)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <div *ngIf="items.length === 0" class="ion-text-center ion-padding" style="margin-top: 50px;">
+    <ion-icon name="cart-outline" style="font-size: 64px; color: #ccc;"></ion-icon>
+    <p>Aún no has añadido artesanías a tu carrito.</p>
+    <ion-button fill="clear" routerLink="/home">Ir a la tienda</ion-button>
+  </div>
+</ion-content>
+
+<ion-footer *ngIf="items.length > 0" class="ion-no-border">
+  <ion-toolbar color="light" class="ion-padding">
+    <ion-title slot="start">Total: ${{ total }}</ion-title>
+    <ion-button expand="block" color="success" (click)="enviarPedido()">
+      PEDIR POR WHATSAPP
+      <ion-icon name="logo-whatsapp" slot="end"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

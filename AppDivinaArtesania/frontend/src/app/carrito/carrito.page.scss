@@ -1,0 +1,17 @@
+ion-item {
+    --background: #ffffff;
+    --border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+}
+
+ion-thumbnail {
+    --border-radius: 8px;
+}
+
+ion-footer {
+    ion-toolbar {
+        --background: #fdfaf5;
+        border-top: 1px solid #ddd;
+    }
+}

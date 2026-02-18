@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalle del Producto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div *ngIf="producto">
+    <div class="image-container">
+      <img [src]="producto.imagen" alt="{{ producto.nombre }}" />
+    </div>
+    
+    <ion-item lines="none">
+      <ion-label>
+        <h1 class="producto-titulo">{{ producto.nombre }}</h1>
+        <ion-badge color="tertiary">{{ producto.categoria }}</ion-badge>
+      </ion-label>
+    </ion-item>
+
+    <div class="info-section ion-padding">
+      <p class="descripcion">{{ producto.descripcion }}</p>
+      
+      <ion-row class="ion-align-items-center">
+        <ion-col>
+          <h2 class="precio">${{ producto.precio | number:'1.0-0' }}</h2>
+        </ion-col>
+        <ion-col class="ion-text-end">
+          <ion-chip [color]="producto.stock > 0 ? 'success' : 'danger'">
+            Stock: {{ producto.stock }}
+          </ion-chip>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <ion-button expand="block" color="success" (click)="contactarArtesana()" class="ion-margin-top">
+  <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+  Consultar por WhatsApp
+</ion-button>
+  </div>
+
+  <div *ngIf="!producto" class="ion-text-center ion-padding">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando detalles...</p>
+  </div>
+</ion-content>

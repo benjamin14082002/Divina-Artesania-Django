@@ -1,0 +1,55 @@
+ion-content { --background: #fdfaf5; }
+
+.container-cards { padding: 15px 10px; }
+
+.producto-card {
+  border-radius: 20px;
+  margin-bottom: 25px;
+  background: #1e1e1e; /* Fondo oscuro de tu captura */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transition: transform 0.2s;
+
+  &:active { transform: scale(0.97); }
+
+  .image-wrapper {
+    height: 220px;
+    img { width: 100%; height: 100%; object-fit: cover; }
+  }
+
+  .card-branding {
+    display: flex;
+    align-items: center;
+    padding: 15px 16px 5px;
+    gap: 12px;
+
+        .icon-box {
+      background: rgba(212, 163, 115, 0.2) !important; // Círculo sutil
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0; // Para que no se aplaste
+
+      ion-icon {
+        font-size: 24px !important;
+        color: #d4a373 !important; /* Dorado fuerte para que resalte */
+        visibility: visible !important;
+        display: block !important;
+      }
+    }
+
+    .categoria-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #8d6e63;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  }
+
+  .titulo-producto { font-size: 1.2rem; font-weight: 700; color: #ffffff; }
+  .precio-texto { color: #d4a373; font-size: 1.4rem; font-weight: 800; }
+}

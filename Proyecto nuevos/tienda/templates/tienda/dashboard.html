@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control - Divina Artesanía</title>
+    <link rel="stylesheet" href="{% static 'tienda/style.css' %}">
+</head>
+<body class="body-dashboard">
+
+    <div class="gestion-container">
+        <header class="dashboard-header">
+            <div>
+                <h1>📦 Gestión de Inventario</h1>
+                <p>Bienvenido al panel administrativo de <strong>Divina Artesanía</strong></p>
+            </div>
+            <div class="header-actions" style="display: flex; gap: 10px; align-items: center;">
+                <a href="{% url 'home' %}" class="btn-secundario">← Ir a la Tienda</a>
+                
+                <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-actualizar" style="background: #e63946; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">
+                        Cerrar Sesión
+                    </button>
+                </form>
+            </div>
+        </header>
+
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <section class="seccion-crear">
+            <h2 class="titulo-seccion">✨ Publicar Nueva Creación</h2>
+            <form action="{% url 'crear_producto' %}" method="POST" enctype="multipart/form-data" class="form-nuevo">
+                {% csrf_token %}
+                <div class="grid-crear">
+                    <div class="campo">
+                        <label>Nombre del Producto</label>
+                        <input type="text" name="nombre" placeholder="Ej: Plato de Cerámica" required>
+                    </div>
+                    
+                    <div class="campo">
+                        <label>Categoría</label>
+                        <select name="categoria" required>
+                            <option value="CER">Cerámica</option>
+                            <option value="TEJ">Tejido</option>
+                            <option value="MAD">Madera</option>
+                            <option value="OTR">Otro</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label>Precio ($)</label>
+                        <input type="number" name="precio" placeholder="15000" required>
+                    </div>
+
+                    <div class="campo">
+                        <label>Stock Inicial</label>
+                        <input type="number" name="stock" placeholder="5" required>
+                    </div>
+
+                    <div class="campo full-width">
+                        <label>Descripción</label>
+                        <textarea name="descripcion" rows="2" placeholder="Describe brevemente la pieza..."></textarea>
+                    </div>
+
+                    <div class="campo full-width file-box">
+                        <label>Foto del Producto (Máximo 3MB)</label>
+                        <input type="file" name="imagen" accept="image/*" required>
+                    </div>
+
+                    <button type="submit" class="btn-publicar full-width">🚀 Subir a la Tienda</button>
+                </div>
+            </form>
+        </section>
+
+        <hr class="divisor" style="margin: 40px 0; border: 0; border-top: 1px solid #eee;">
+
+        <section class="seccion-tabla">
+            <h2 class="titulo-seccion">📋 Inventario Actual</h2>
+            <div class="tabla-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for producto in productos %}
+                        <tr>
+                            <td>
+                                <div class="mini-info">
+                                    <img src="{% if producto.imagen %}{{ producto.imagen.url }}{% else %}https://via.placeholder.com/50{% endif %}" alt="img" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                                    <span>{{ producto.nombre }}</span>
+                                </div>
+                            </td>
+                            
+                            <form action="{% url 'actualizar_stock' producto.id %}" method="POST">
+                                {% csrf_token %}
+                                <td>
+                                    <input type="number" name="precio" value="{{ producto.precio }}" class="input-edit">
+                                </td>
+                                <td>
+                                    <input type="number" name="stock" value="{{ producto.stock }}" class="input-edit" min="0">
+                                </td>
+                                <td>
+                                    {% if producto.stock > 0 %}
+                                        <span class="badge ok">Disponible</span>
+                                    {% else %}
+                                        <span class="badge agotado">Agotado</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button type="submit" class="btn-actualizar">Guardar</button>
+                                </td>
+                            </form>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 40px;">No hay productos todavía. ¡Usa el formulario de arriba!</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+</body>
+</html>

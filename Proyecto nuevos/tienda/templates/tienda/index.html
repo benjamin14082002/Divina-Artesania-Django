@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'tienda/style.css' %}">
+    <title>Divina Artesanía</title>
+</head>
+<body>
+    <div id="toast-container"></div>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="/">
+                    <img src="{% static 'tienda/img/logo.png' %}" alt="Logo Divina Artesanía" id="logo-img">
+                </a>
+                <span>Divina Artesania</span>
+            </div>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li class="carrito-link">🛒 <span id="cuenta-carrito">0</span></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Arte hecho a mano</h1>
+            <p>Piezas únicas creadas con pasión en Maipú.</p>
+            <button id="btn-explorar">Ver Catálogo</button>
+        </section>
+
+        <section class="galeria" id="productos">
+            {% for producto in productos %}
+            <div class="card">
+                <span class="badge">{{ producto.get_categoria_display }}</span>
+                
+                {% if producto.stock <= 3 %}
+                    <span class="badge-warning">¡Solo quedan {{ producto.stock }}!</span>
+                {% endif %}
+                
+                <img src="{% if producto.imagen %}{{ producto.imagen.url }}{% else %}https://via.placeholder.com/300x200?text=Divina+Artesania{% endif %}" 
+                     alt="{{ producto.nombre }}">
+                
+                <div class="card-info">
+                    <h3>{{ producto.nombre }}</h3>
+                    <p>{{ producto.descripcion }}</p>
+                    <span class="precio">${{ producto.precio }}</span>
+                    <button class="btn-comprar">Añadir</button>
+                </div>
+            </div>
+            {% empty %}
+            <div class="mensaje-vacio">
+                <h2>¡Estamos preparando nuevas piezas!</h2>
+                <p>Actualmente no tenemos stock disponible para venta inmediata.</p>
+                <p>Si buscas algo personalizado, ¡escríbenos!</p>
+                <a href="https://api.whatsapp.com/send?phone=56933042260" class="btn-whatsapp-vacio">Consultar por WhatsApp</a>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+
+    <div id="modal-carrito" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Tu Carrito</h2>
+            <div id="lista-carrito"></div>
+            <hr>
+            <div class="total-container">
+                <strong>Total: $<span id="precio-total">0</span></strong>
+            </div>
+            <button id="btn-finalizar">Finalizar Compra vía WhatsApp</button>
+        </div>
+    </div>
+
+    <footer id="contacto">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Divina Artesanía</h3>
+            <p>Maipú, Región Metropolitana.</p>
+        </div>
+        <div class="footer-section">
+            <h3>Contacto</h3>
+            <p>Email: contacto@divinaartesania.cl</p>
+            <p>WhatsApp: +56 9 3304 2260</p>
+        </div>
+        <div class="footer-section">
+            <h3>Administración</h3>
+            <ul>
+                <li>
+                    <a href="{% url 'login' %}" class="link-admin">
+                        🔐 Acceso Panel de Control
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 Benjamín - Ingeniería en Informática
+    </div>
+</footer>
+
+    <script src="{% static 'tienda/script.js' %}"></script>
+</body>
+</html>
