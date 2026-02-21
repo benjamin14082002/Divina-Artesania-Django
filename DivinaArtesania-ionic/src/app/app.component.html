@@ -1,0 +1,27 @@
+<ion-app>
+  <ion-tabs>
+
+    <ion-tab-bar slot="bottom">
+
+      <ion-tab-button tab="home" href="/home">
+        <ion-icon name="storefront-outline"></ion-icon>
+        <ion-label>Tienda</ion-label>
+      </ion-tab-button>
+
+      <ion-tab-button tab="carrito" href="/carrito">
+        <ion-icon name="bag-handle-outline"></ion-icon>
+        <ion-label>Carrito</ion-label>
+        <ion-badge *ngIf="(cartCount | async) ?? 0 as count">
+          {{ count > 0 ? count : '' }}
+        </ion-badge>
+      </ion-tab-button>
+
+      <ion-tab-button (click)="abrirWhatsApp()">
+        <ion-icon name="logo-whatsapp"></ion-icon>
+        <ion-label>Contacto</ion-label>
+      </ion-tab-button>
+
+    </ion-tab-bar>
+
+  </ion-tabs>
+</ion-app>

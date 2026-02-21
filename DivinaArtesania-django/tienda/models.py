@@ -5,6 +5,7 @@ class Producto(models.Model):
         ('CERAMICA', 'Cerámica'),
         ('TEJIDOS', 'Tejidos'),
         ('MADERA', 'Madera'),
+        ('OTRO', 'Otro'),
     ]
 
     nombre = models.CharField(max_length=100, verbose_name="Nombre del Producto")

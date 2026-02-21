@@ -1,0 +1,94 @@
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+// ============================================================
+// ESTILOS GLOBALES — Divina Artesanía
+// ============================================================
+
+// Fondo general cálido
+ion-content {
+  --background: var(--divina-cream);
+}
+
+// Toolbar con gradiente artesanal
+ion-toolbar {
+  --background: linear-gradient(135deg, #8B5E3C 0%, #6B4423 100%);
+  --color: #ffffff;
+  --border-color: transparent;
+}
+
+// Tab bar inferior artesanal
+ion-tab-bar {
+  --background: #FFFAF4;
+  --border:      1px solid var(--divina-light-gold);
+  height: 62px;
+  padding-bottom: 4px;
+  box-shadow: 0 -4px 20px var(--divina-shadow);
+}
+
+ion-tab-button {
+  --color:          #A0856A;
+  --color-selected: var(--divina-brown);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+
+  ion-icon { font-size: 22px; }
+  ion-label { margin-top: 2px; }
+
+  // Línea dorada debajo del ícono activo
+  &.tab-selected::before {
+    content:       '';
+    position:      absolute;
+    top:           0;
+    left:          50%;
+    transform:     translateX(-50%);
+    width:         36px;
+    height:        3px;
+    background:    var(--divina-gold);
+    border-radius: 0 0 4px 4px;
+  }
+}
+
+// Badges de carrito
+ion-badge {
+  --background: var(--divina-gold);
+  --color:      var(--divina-dark-brown);
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 2px 6px;
+}
+
+// Botones primarios
+ion-button[color="primary"] {
+  --background:         var(--divina-brown);
+  --background-hover:   var(--divina-dark-brown);
+  --border-radius:      12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+// Searchbar artesanal
+ion-searchbar {
+  --background:       rgba(255,255,255,0.15);
+  --color:            #ffffff;
+  --placeholder-color: rgba(255,255,255,0.7);
+  --icon-color:       rgba(255,255,255,0.8);
+  --border-radius:    12px;
+  padding: 4px 8px 8px !important;
+}
+
+// Skeleton artesanal
+ion-skeleton-text {
+  --background: var(--divina-light-gold);
+  --background-rgb: 245, 230, 200;
+}

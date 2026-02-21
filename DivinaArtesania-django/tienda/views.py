@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages  # Necesario para enviar alertas al dashboard
@@ -84,6 +85,63 @@ def actualizar_stock(request, producto_id):
         producto.save()
         messages.success(request, f"✅ Datos de '{producto.nombre}' actualizados correctamente.")
         
+    return redirect('dashboard')
+
+@login_required
+def eliminar_producto(request, producto_id):
+    """
+    Elimina un producto del inventario. Solo acepta POST para mayor seguridad.
+    """
+    if request.method == 'POST':
+        producto = get_object_or_404(Producto, id=producto_id)
+        nombre = producto.nombre
+
+        # Si tiene imagen guardada, la eliminamos del servidor también
+        if producto.imagen:
+            if os.path.isfile(producto.imagen.path):
+                os.remove(producto.imagen.path)
+
+        producto.delete()
+        messages.success(request, f"🗑️ El producto '{nombre}' ha sido eliminado correctamente.")
+    
+    return redirect('dashboard')
+
+@login_required
+def editar_producto(request, producto_id):
+    """
+    Edita todos los campos de un producto: nombre, descripción, categoría, precio, stock e imagen.
+    """
+    if request.method == 'POST':
+        producto = get_object_or_404(Producto, id=producto_id)
+
+        producto.nombre      = request.POST.get('nombre', producto.nombre)
+        producto.descripcion = request.POST.get('descripcion', producto.descripcion)
+        producto.categoria   = request.POST.get('categoria', producto.categoria)
+        producto.precio      = int(request.POST.get('precio', producto.precio))
+        producto.stock       = int(request.POST.get('stock', producto.stock))
+        producto.disponible  = producto.stock > 0
+
+        # Solo reemplaza la imagen si el usuario subió una nueva
+        imagen_nueva = request.FILES.get('imagen')
+        if imagen_nueva:
+            if imagen_nueva.size > 3 * 1024 * 1024:
+                messages.error(request, "⚠️ Error: La imagen es muy pesada. El máximo permitido es 3MB.")
+                return redirect('dashboard')
+
+            extensiones_admitidas = ['jpg', 'jpeg', 'png', 'webp']
+            if not imagen_nueva.name.lower().endswith(tuple(extensiones_admitidas)):
+                messages.error(request, "⚠️ Error: Formato no válido. Usa JPG, PNG o WebP.")
+                return redirect('dashboard')
+
+            # Eliminar la imagen anterior del servidor
+            if producto.imagen and os.path.isfile(producto.imagen.path):
+                os.remove(producto.imagen.path)
+
+            producto.imagen = imagen_nueva
+
+        producto.save()
+        messages.success(request, f"✏️ El producto '{producto.nombre}' ha sido actualizado correctamente.")
+
     return redirect('dashboard')
 
 # --- VISTAS PARA LA API (CONEXIÓN CON IONIC) ---

@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'tienda/style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'tienda/img/favicon.ico' %}">
     <title>Divina Artesanía</title>
 </head>
 <body>
@@ -13,13 +14,12 @@
     <header>
         <nav>
             <div class="logo">
-                <a href="/">
-                    <img src="{% static 'tienda/img/logo.png' %}" alt="Logo Divina Artesanía" id="logo-img">
-                </a>
+                <a href="/"><img src="{% static 'tienda/img/logo.png' %}" alt="Logo" id="logo-img"></a>
                 <span>Divina Artesania</span>
             </div>
             <ul>
                 <li><a href="#">Inicio</a></li>
+                <li><a href="#nosotros">Nosotros</a></li>
                 <li><a href="#productos">Productos</a></li>
                 <li><a href="#contacto">Contacto</a></li>
                 <li class="carrito-link">🛒 <span id="cuenta-carrito">0</span></li>
@@ -34,40 +34,98 @@
             <button id="btn-explorar">Ver Catálogo</button>
         </section>
 
-        <section class="galeria" id="productos">
+        <section class="sobre-nosotros" id="nosotros">
+            <div class="sobre-contenido">
+                <div class="sobre-texto">
+                    <span class="sobre-etiqueta">✦ Nuestra Historia ✦</span>
+                    <h2>Artesanía con alma,<br>hecha con las manos</h2>
+                    <p>Somos un emprendimiento familiar ubicado en Maipú. Cada pieza que creamos nace de la pasión por los materiales naturales y las técnicas que hemos perfeccionado con el tiempo.</p>
+                    <p>Trabajamos con cerámica, tejidos en lana natural y madera noble, creando objetos únicos que llevan calidez artesanal a cada hogar.</p>
+                    <a href="#productos" class="btn-nosotros">Ver Nuestras Creaciones</a>
+                </div>
+                <div class="sobre-stats">
+                    <div class="stat">
+                        <span class="stat-numero">100%</span>
+                        <span class="stat-label">Hecho a mano</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-numero">3</span>
+                        <span class="stat-label">Categorías</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-numero">♥</span>
+                        <span class="stat-label">Con pasión</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="filtros-wrapper" id="productos">
+            <h2 class="filtros-titulo">Nuestras Creaciones</h2>
+            <div class="filtros">
+                <a href="{% url 'home' %}" class="btn-filtro {% if not categoria_activa %}activo{% endif %}">
+                    <span class="filtro-icono">🏺</span> Todos
+                </a>
+                {% for valor, nombre in categorias %}
+                <a href="?categoria={{ valor }}" class="btn-filtro {% if categoria_activa == valor %}activo{% endif %}">
+                    {% if valor == 'CERAMICA' %}<span class="filtro-icono">🏺</span>
+                    {% elif valor == 'TEJIDOS' %}<span class="filtro-icono">🧶</span>
+                    {% elif valor == 'MADERA' %}<span class="filtro-icono">🪵</span>
+                    {% else %}<span class="filtro-icono">✨</span>{% endif %}
+                    {{ nombre }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <section class="galeria">
             {% for producto in productos %}
             <div class="card">
                 <span class="badge">{{ producto.get_categoria_display }}</span>
-                
                 {% if producto.stock <= 3 %}
                     <span class="badge-warning">¡Solo quedan {{ producto.stock }}!</span>
                 {% endif %}
-                
-                <img src="{% if producto.imagen %}{{ producto.imagen.url }}{% else %}https://via.placeholder.com/300x200?text=Divina+Artesania{% endif %}" 
+                <img src="{% if producto.imagen %}{{ producto.imagen.url }}{% else %}{% static 'tienda/img/placeholder.png' %}{% endif %}"
                      alt="{{ producto.nombre }}">
-                
                 <div class="card-info">
                     <h3>{{ producto.nombre }}</h3>
                     <p>{{ producto.descripcion }}</p>
                     <span class="precio">${{ producto.precio }}</span>
-                    <button class="btn-comprar">Añadir</button>
+                    <button class="btn-comprar"
+                            data-id="{{ producto.id }}"
+                            data-nombre="{{ producto.nombre }}"
+                            data-precio="{{ producto.precio }}"
+                            data-imagen="{% if producto.imagen %}{{ producto.imagen.url }}{% endif %}">
+                        🛒 Añadir al carrito
+                    </button>
                 </div>
             </div>
             {% empty %}
             <div class="mensaje-vacio">
                 <h2>¡Estamos preparando nuevas piezas!</h2>
                 <p>Actualmente no tenemos stock disponible para venta inmediata.</p>
-                <p>Si buscas algo personalizado, ¡escríbenos!</p>
                 <a href="https://api.whatsapp.com/send?phone=56933042260" class="btn-whatsapp-vacio">Consultar por WhatsApp</a>
             </div>
             {% endfor %}
         </section>
+
+        {% if productos.has_other_pages %}
+        <div class="paginacion">
+            {% if productos.has_previous %}
+                <a href="?page={{ productos.previous_page_number }}{% if categoria_activa %}&categoria={{ categoria_activa }}{% endif %}" class="btn-pagina">← Anterior</a>
+            {% endif %}
+            <span class="pagina-info">Página {{ productos.number }} de {{ productos.paginator.num_pages }}</span>
+            {% if productos.has_next %}
+                <a href="?page={{ productos.next_page_number }}{% if categoria_activa %}&categoria={{ categoria_activa }}{% endif %}" class="btn-pagina">Siguiente →</a>
+            {% endif %}
+        </div>
+        {% endif %}
     </main>
 
     <div id="modal-carrito" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
-            <h2>Tu Carrito</h2>
+            <h2>🛒 Tu Carrito</h2>
             <div id="lista-carrito"></div>
             <hr>
             <div class="total-container">
@@ -78,31 +136,49 @@
     </div>
 
     <footer id="contacto">
-    <div class="footer-content">
-        <div class="footer-section">
-            <h3>Divina Artesanía</h3>
-            <p>Maipú, Región Metropolitana.</p>
+        <div class="footer-content">
+            <div class="footer-section footer-brand">
+                <img src="{% static 'tienda/img/logo.png' %}" alt="Logo" class="footer-logo">
+                <h3>Divina Artesanía</h3>
+                <p>Arte hecho a mano con pasión desde Maipú, Región Metropolitana.</p>
+                <div class="footer-redes">
+                    <a href="https://api.whatsapp.com/send?phone=56933042260" class="red-social" title="WhatsApp">💬</a>
+                    <a href="mailto:contacto@divinaartesania.cl" class="red-social" title="Email">✉️</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Navegación</h3>
+                <ul>
+                    <li><a href="#">🏠 Inicio</a></li>
+                    <li><a href="#nosotros">👋 Nosotros</a></li>
+                    <li><a href="#productos">🏺 Productos</a></li>
+                    <li><a href="#contacto">📬 Contacto</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p>📧 contacto@divinaartesania.cl</p>
+                <p>📱 +56 9 3304 2260</p>
+                <p>📍 Maipú, Región Metropolitana</p>
+                <a href="https://api.whatsapp.com/send?phone=56933042260" class="btn-footer-whatsapp">Escríbenos por WhatsApp</a>
+            </div>
+            <div class="footer-section">
+                <h3>Administración</h3>
+                <ul>
+                    <li><a href="{% url 'login' %}" class="link-admin">🔐 Acceso Panel de Control</a></li>
+                </ul>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3328.685!2d-70.7575!3d-33.5132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c3b7c5f9f8b3%3A0x1!2sMaip%C3%BA!5e0!3m2!1ses!2scl!4v1"
+                    width="100%" height="130"
+                    style="border:0; border-radius:10px; margin-top:12px;"
+                    allowfullscreen="" loading="lazy">
+                </iframe>
+            </div>
         </div>
-        <div class="footer-section">
-            <h3>Contacto</h3>
-            <p>Email: contacto@divinaartesania.cl</p>
-            <p>WhatsApp: +56 9 3304 2260</p>
+        <div class="footer-bottom">
+            &copy; 2026 Divina Artesanía — Benjamín · Ingeniería en Informática
         </div>
-        <div class="footer-section">
-            <h3>Administración</h3>
-            <ul>
-                <li>
-                    <a href="{% url 'login' %}" class="link-admin">
-                        🔐 Acceso Panel de Control
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        &copy; 2026 Benjamín - Ingeniería en Informática
-    </div>
-</footer>
+    </footer>
 
     <script src="{% static 'tienda/script.js' %}"></script>
 </body>

@@ -50,10 +50,10 @@
                     <div class="campo">
                         <label>Categoría</label>
                         <select name="categoria" required>
-                            <option value="CER">Cerámica</option>
-                            <option value="TEJ">Tejido</option>
-                            <option value="MAD">Madera</option>
-                            <option value="OTR">Otro</option>
+                            <option value="CERAMICA">Cerámica</option>
+                            <option value="TEJIDOS">Tejidos</option>
+                            <option value="MADERA">Madera</option>
+                            <option value="OTRO">Otro</option>
                         </select>
                     </div>
 
@@ -94,7 +94,9 @@
                             <th>Precio</th>
                             <th>Stock</th>
                             <th>Estado</th>
-                            <th>Acción</th>
+                            <th>Guardar</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -106,30 +108,50 @@
                                     <span>{{ producto.nombre }}</span>
                                 </div>
                             </td>
-                            
-                            <form action="{% url 'actualizar_stock' producto.id %}" method="POST">
-                                {% csrf_token %}
-                                <td>
-                                    <input type="number" name="precio" value="{{ producto.precio }}" class="input-edit">
-                                </td>
-                                <td>
-                                    <input type="number" name="stock" value="{{ producto.stock }}" class="input-edit" min="0">
-                                </td>
-                                <td>
-                                    {% if producto.stock > 0 %}
-                                        <span class="badge ok">Disponible</span>
-                                    {% else %}
-                                        <span class="badge agotado">Agotado</span>
-                                    {% endif %}
-                                </td>
-                                <td>
+                            <td>
+                                <input type="number" name="precio" value="{{ producto.precio }}" class="input-edit"
+                                       form="form-guardar-{{ producto.id }}">
+                            </td>
+                            <td>
+                                <input type="number" name="stock" value="{{ producto.stock }}" class="input-edit" min="0"
+                                       form="form-guardar-{{ producto.id }}">
+                            </td>
+                            <td>
+                                {% if producto.stock > 0 %}
+                                    <span class="badge ok">Disponible</span>
+                                {% else %}
+                                    <span class="badge agotado">Agotado</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form id="form-guardar-{{ producto.id }}"
+                                      action="{% url 'actualizar_stock' producto.id %}"
+                                      method="POST">
+                                    {% csrf_token %}
                                     <button type="submit" class="btn-actualizar">Guardar</button>
-                                </td>
-                            </form>
+                                </form>
+                            </td>
+                            <td>
+                                <button class="btn-editar" onclick="abrirModal(
+                                    {{ producto.id }},
+                                    '{{ producto.nombre|escapejs }}',
+                                    '{{ producto.descripcion|escapejs }}',
+                                    '{{ producto.categoria }}',
+                                    {{ producto.precio }},
+                                    {{ producto.stock }}
+                                )">✏️ Editar</button>
+                            </td>
+                            <td>
+                                <form action="{% url 'eliminar_producto' producto.id %}" method="POST"
+                                      onsubmit="return confirm('⚠️ ¿Seguro que quieres eliminar «{{ producto.nombre }}»? Esta acción no se puede deshacer.')">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn-eliminar">🗑️ Eliminar</button>
+                                </form>
+                            </td>
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="5" style="text-align: center; padding: 40px;">No hay productos todavía. ¡Usa el formulario de arriba!</td>
+                            <td colspan="7" style="text-align: center; padding: 40px;">No hay productos todavía. ¡Usa el formulario de arriba!</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -137,6 +159,77 @@
             </div>
         </section>
     </div>
+    <!-- MODAL DE EDICIÓN -->
+    <div id="modal-editar" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:1000; justify-content:center; align-items:center;">
+        <div style="background:white; border-radius:12px; padding:30px; width:90%; max-width:550px; max-height:90vh; overflow-y:auto;">
+            <h2 style="margin-bottom:20px;">✏️ Editar Producto</h2>
+            <form id="form-editar" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="grid-crear">
+                    <div class="campo">
+                        <label>Nombre del Producto</label>
+                        <input type="text" name="nombre" id="edit-nombre" required>
+                    </div>
+                    <div class="campo">
+                        <label>Categoría</label>
+                        <select name="categoria" id="edit-categoria" required>
+                            <option value="CERAMICA">Cerámica</option>
+                            <option value="TEJIDOS">Tejidos</option>
+                            <option value="MADERA">Madera</option>
+                            <option value="OTRO">Otro</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label>Precio ($)</label>
+                        <input type="number" name="precio" id="edit-precio" required>
+                    </div>
+                    <div class="campo">
+                        <label>Stock</label>
+                        <input type="number" name="stock" id="edit-stock" min="0" required>
+                    </div>
+                    <div class="campo full-width">
+                        <label>Descripción</label>
+                        <textarea name="descripcion" id="edit-descripcion" rows="2"></textarea>
+                    </div>
+                    <div class="campo full-width file-box">
+                        <label>Nueva Foto (opcional, máximo 3MB)</label>
+                        <input type="file" name="imagen" accept="image/*">
+                    </div>
+                    <div style="display:flex; gap:10px; width:100%;">
+                        <button type="submit" class="btn-publicar" style="flex:1;">💾 Guardar Cambios</button>
+                        <button type="button" onclick="cerrarModal()" class="btn-secundario" style="flex:1; text-align:center;">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function abrirModal(id, nombre, descripcion, categoria, precio, stock) {
+            // Cargar datos en el formulario
+            document.getElementById('edit-nombre').value = nombre;
+            document.getElementById('edit-descripcion').value = descripcion;
+            document.getElementById('edit-categoria').value = categoria;
+            document.getElementById('edit-precio').value = precio;
+            document.getElementById('edit-stock').value = stock;
+
+            // Apuntar el form a la URL correcta según el producto
+            document.getElementById('form-editar').action = '/editar_producto/' + id + '/';
+
+            // Mostrar el modal
+            const modal = document.getElementById('modal-editar');
+            modal.style.display = 'flex';
+        }
+
+        function cerrarModal() {
+            document.getElementById('modal-editar').style.display = 'none';
+        }
+
+        // Cerrar modal si se hace clic fuera
+        document.getElementById('modal-editar').addEventListener('click', function(e) {
+            if (e.target === this) cerrarModal();
+        });
+    </script>
 
 </body>
 </html>

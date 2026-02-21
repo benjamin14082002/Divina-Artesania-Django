@@ -1,0 +1,71 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar>
+    <div class="header-content">
+      <img src="assets/icon/logo.png" alt="Logo" class="header-logo" />
+      <span (click)="abrirAdmin()" class="titulo-app">Divina Artesanía</span>
+    </div>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar
+      placeholder="¿Qué artesanía buscas?"
+      (ionInput)="buscarProducto($event)"
+      animated="true">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- BANNER SUPERIOR -->
+  <div class="hero-banner">
+    <p class="hero-sub">Piezas únicas hechas a mano en Maipú</p>
+  </div>
+
+  <!-- TARJETAS DE PRODUCTOS -->
+  <div class="container-cards">
+    <div *ngFor="let p of productosFiltrados" class="producto-card" [routerLink]="['/detalle', p.id]">
+
+      <!-- Imagen -->
+      <div class="image-wrapper">
+        <img [src]="p.imagen" alt="{{ p.nombre }}"
+             onerror="this.src='assets/icon/placeholder.png'" />
+        <div class="badge-categoria">
+          <ion-icon [name]="getIcono(p.categoria)"></ion-icon>
+          {{ p.categoria }}
+        </div>
+        <div class="badge-stock" [class.agotado]="p.stock <= 0">
+          {{ p.stock > 0 ? 'Disponible' : 'Agotado' }}
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="card-info">
+        <h3 class="card-nombre">{{ p.nombre }}</h3>
+        <p class="card-descripcion">{{ p.descripcion }}</p>
+        <div class="card-footer">
+          <span class="card-precio">${{ p.precio | number:'1.0-0' }}</span>
+          <div class="card-actions" (click)="$event.stopPropagation()">
+            <button class="btn-menos" (click)="quitarRapido(p, $event)">−</button>
+            <button class="btn-mas" (click)="agregarRapido(p, $event)" [disabled]="p.stock <= 0">+</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SKELETON mientras carga -->
+  <div *ngIf="listaProductos.length === 0" class="container-cards">
+    <div *ngFor="let i of [1,2,3]" class="producto-card skeleton-card">
+      <ion-skeleton-text [animated]="true" style="height: 200px; border-radius: 16px 16px 0 0;"></ion-skeleton-text>
+      <div style="padding: 12px;">
+        <ion-skeleton-text [animated]="true" style="height: 18px; width: 70%; border-radius: 6px;"></ion-skeleton-text>
+        <ion-skeleton-text [animated]="true" style="height: 14px; width: 40%; margin-top: 8px; border-radius: 6px;"></ion-skeleton-text>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

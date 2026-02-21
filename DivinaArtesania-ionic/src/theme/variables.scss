@@ -1,0 +1,49 @@
+// ============================================================
+// DIVINA ARTESANÍA — Paleta cálida y artesanal
+// ============================================================
+
+:root {
+  // Color primario: café madera
+  --ion-color-primary:          #8B5E3C;
+  --ion-color-primary-rgb:      139, 94, 60;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade:    #7a5234;
+  --ion-color-primary-tint:     #976e50;
+
+  // Color secundario: dorado artesanal
+  --ion-color-secondary:        #D4A853;
+  --ion-color-secondary-rgb:    212, 168, 83;
+  --ion-color-secondary-contrast: #1a1a1a;
+  --ion-color-secondary-shade:  #bb9449;
+  --ion-color-secondary-tint:   #d8b164;
+
+  // Color terciario: verde musgo suave
+  --ion-color-tertiary:         #6B7C5E;
+  --ion-color-tertiary-rgb:     107, 124, 94;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-shade:   #5e6d53;
+  --ion-color-tertiary-tint:    #7a896e;
+
+  // Fondos
+  --ion-background-color:       #FDF6EE;
+  --ion-background-color-rgb:   253, 246, 238;
+  --ion-item-background:        #FDF6EE;
+
+  // Textos
+  --ion-text-color:             #3B2A1A;
+  --ion-text-color-rgb:         59, 42, 26;
+
+  // Tipografía artesanal
+  --ion-font-family: 'Georgia', 'Times New Roman', serif;
+
+  // Variables personalizadas Divina
+  --divina-cream:       #FDF6EE;
+  --divina-brown:       #8B5E3C;
+  --divina-dark-brown:  #3B2A1A;
+  --divina-gold:        #D4A853;
+  --divina-light-gold:  #F5E6C8;
+  --divina-green:       #6B7C5E;
+  --divina-card-bg:     #FFFAF4;
+  --divina-shadow:      rgba(139, 94, 60, 0.15);
+}

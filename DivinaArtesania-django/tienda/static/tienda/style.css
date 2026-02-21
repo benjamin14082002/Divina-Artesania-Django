@@ -93,8 +93,8 @@ nav ul li a:hover { color: #d4a373; }
 /* --- BOTONES --- */
 button { padding: 12px 28px; background: #d4a373; border: none; color: white; cursor: pointer; border-radius: 5px; font-weight: 600; transition: 0.3s; }
 button:hover { background: #bc8a5f; }
-.btn-comprar { width: 100%; background: #333; }
-.btn-comprar:hover { background: #000; }
+
+
 #btn-finalizar { width: 100%; margin-top: 20px; background: #25d366; }
 
 /* --- MODAL Y TOASTS --- */
@@ -284,6 +284,17 @@ td {
 
 .btn-actualizar:hover { background: #000; }
 
+.btn-eliminar {
+    background: #e63946;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-eliminar:hover { background: #b5202c; }
+
 /* Badges de Estado */
 .badge {
     padding: 5px 12px;
@@ -389,4 +400,290 @@ td {
     background-color: #d4edda;
     color: #155724;
     border-color: #c3e6cb;
+}
+
+/* ================================
+   SECCIÓN SOBRE NOSOTROS
+================================ */
+.sobre-nosotros {
+    background: linear-gradient(135deg, #fdf6ee 0%, #f5e6cc 100%);
+    padding: 80px 50px;
+    border-top: 3px solid #d4a373;
+    border-bottom: 3px solid #d4a373;
+}
+
+.sobre-contenido {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.sobre-texto {
+    flex: 1;
+    min-width: 280px;
+}
+
+.sobre-etiqueta {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #d4a373;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.sobre-texto h2 {
+    font-size: 2rem;
+    color: #3B2A1A;
+    line-height: 1.3;
+    margin-bottom: 20px;
+    font-family: Georgia, serif;
+}
+
+.sobre-texto p {
+    color: #6b5040;
+    line-height: 1.8;
+    margin-bottom: 15px;
+}
+
+.btn-nosotros {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 12px 28px;
+    background: #8B5E3C;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 700;
+    transition: 0.3s;
+}
+
+.btn-nosotros:hover {
+    background: #6B4423;
+    transform: translateY(-2px);
+}
+
+.sobre-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    flex-shrink: 0;
+}
+
+.stat {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(139, 94, 60, 0.12);
+    border-left: 4px solid #d4a373;
+    min-width: 160px;
+}
+
+.stat-numero {
+    display: block;
+    font-size: 2rem;
+    font-weight: 800;
+    color: #8B5E3C;
+    font-family: Georgia, serif;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #888;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+}
+
+/* ================================
+   FILTROS MEJORADOS
+================================ */
+.filtros-wrapper {
+    text-align: center;
+    padding: 50px 20px 20px;
+    background: #fdf6ee;
+}
+
+.filtros-titulo {
+    font-size: 1.8rem;
+    color: #3B2A1A;
+    margin-bottom: 25px;
+    font-family: Georgia, serif;
+}
+
+.filtros {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 0 20px 10px;
+}
+
+.btn-filtro {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 22px;
+    border-radius: 30px;
+    border: 2px solid #d4a373;
+    background: transparent;
+    color: #8B5E3C;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.btn-filtro:hover {
+    background: #8B5E3C;
+    color: white;
+    border-color: #8B5E3C;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(139, 94, 60, 0.25);
+}
+
+.btn-filtro.activo {
+    background: #8B5E3C;
+    color: white;
+    border-color: #8B5E3C;
+    box-shadow: 0 4px 12px rgba(139, 94, 60, 0.3);
+}
+
+.filtro-icono { font-size: 1rem; }
+
+/* ================================
+   BOTÓN COMPRAR MEJORADO
+================================ */
+.btn-comprar {
+    width: 100%;
+    background: linear-gradient(135deg, #8B5E3C, #6B4423);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    letter-spacing: 0.5px;
+}
+
+.btn-comprar:hover {
+    background: linear-gradient(135deg, #6B4423, #4a2f18);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(139, 94, 60, 0.35);
+}
+
+/* ================================
+   FOOTER MEJORADO
+================================ */
+footer {
+    background: linear-gradient(135deg, #2a1f17 0%, #3B2A1A 100%);
+    color: #e0cfc0;
+    padding: 70px 50px 30px;
+    margin-top: 60px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-brand .footer-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    padding: 4px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.footer-section h3 {
+    margin-bottom: 18px;
+    color: #d4a373;
+    font-family: Georgia, serif;
+    font-size: 1.1rem;
+    border-bottom: 1px solid rgba(212,163,115,0.3);
+    padding-bottom: 10px;
+}
+
+.footer-section p {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #c0a898;
+    line-height: 1.7;
+}
+
+.footer-section ul { list-style: none; padding: 0; }
+.footer-section ul li { margin-bottom: 10px; }
+.footer-section ul li a {
+    color: #c0a898;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+.footer-section ul li a:hover { color: #d4a373; padding-left: 5px; }
+
+.footer-redes {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.red-social {
+    width: 40px;
+    height: 40px;
+    background: rgba(212,163,115,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: 0.3s;
+    border: 1px solid rgba(212,163,115,0.3);
+}
+
+.red-social:hover {
+    background: #d4a373;
+    transform: translateY(-3px);
+}
+
+.btn-footer-whatsapp {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 18px;
+    background: #25d366;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    transition: 0.3s;
+}
+
+.btn-footer-whatsapp:hover {
+    background: #1eb954;
+    transform: translateY(-2px);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(212,163,115,0.2);
+    font-size: 0.82rem;
+    color: #888;
 }
